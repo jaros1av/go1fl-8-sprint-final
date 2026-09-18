@@ -113,50 +113,22 @@ func (s ParcelStore) SetStatus(number int, status string) error {
 }
 
 func (s ParcelStore) SetAddress(number int, address string) error {
-	res, err := s.db.Exec(
+	_, err := s.db.Exec(
 		UpdateParselAddressByNumberTpl,
 		sql.Named("address", address),
 		sql.Named("number", number),
 		sql.Named("status", ParcelStatusRegistered),
 	)
 
-	if err != nil {
-		return err
-	}
-
-	affectedRow, err := res.RowsAffected()
-
-	if err != nil {
-		return err
-	}
-
-	if affectedRow == 0 {
-		return fmt.Errorf("cannot set address: parcel with number %d not found or status not %s", number, ParcelStatusRegistered)
-	}
-
-	return nil
+	return err
 }
 
 func (s ParcelStore) Delete(number int) error {
-	res, err := s.db.Exec(
+	_, err := s.db.Exec(
 		DeleteParselByNumberTpl,
 		sql.Named("number", number),
 		sql.Named("status", ParcelStatusRegistered),
 	)
 
-	if err != nil {
-		return err
-	}
-
-	affectedRow, err := res.RowsAffected()
-
-	if err != nil {
-		return err
-	}
-
-	if affectedRow == 0 {
-		return fmt.Errorf("cannot delete: parcel with number %d not found or status not %s", number, ParcelStatusRegistered)
-	}
-
-	return nil
+	return err
 }
