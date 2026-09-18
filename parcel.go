@@ -14,7 +14,7 @@ func NewParcelStore(db *sql.DB) ParcelStore {
 }
 
 const (
-	InsertParcelTpl                = "INSERT INTO parcel (client, status, address, created_at) VALUES (:client, :status, :address, :created_at)"
+	InsertParcelTpl                = "INSERT INTO parcel (client, status, address, created_at) VALUES (:client, :status, :address, :createdAt)"
 	GetParselTpl                   = "SELECT number, client, status, address, created_at FROM parcel WHERE number = :number"
 	GetParselListTpl               = "SELECT number, client, status, address, created_at FROM parcel WHERE client = :client"
 	UpdateParselStatusByNumberTpl  = "UPDATE parcel SET status = :status WHERE number = :number"
@@ -28,7 +28,7 @@ func (s ParcelStore) Add(p Parcel) (int, error) {
 		sql.Named("client", p.Client),
 		sql.Named("status", p.Status),
 		sql.Named("address", p.Address),
-		sql.Named("created_at", p.CreatedAt),
+		sql.Named("createdAt", p.CreatedAt),
 	)
 
 	if err != nil {
